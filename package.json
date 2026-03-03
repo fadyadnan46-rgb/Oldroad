@@ -4,15 +4,25 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "tsx server.ts",
+    "start": "tsx server.ts",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "@google/genai": "^1.35.0",
-    "react-router-dom": "^7.12.0",
+    "@google/genai": "1.35.0",
+    "@types/express": "^5.0.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "motion": "^12.34.0",
+    "mysql2": "^3.18.2",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-router-dom": "7.2.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "tsx": "^4.21.0",
     "xlsx": "0.18.5"
   },
   "devDependencies": {

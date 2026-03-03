@@ -1,7 +1,7 @@
 import { 
   Vehicle, VehicleStatus, Location, User, UserRole, TradeRequest, 
   Transaction, TransactionType, TransactionCategory, ChartOfAccount, 
-  AccountType, Invoice, VendorBill, BankAccount, VendorType, BudgetPlan, ContactEntity, EntityCategory 
+  AccountType, Invoice, VendorBill, BankAccount, VendorType, BudgetPlan, ContactEntity, EntityCategory, ContactMessage
 } from './types';
 
 export const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1542362567-b05503f3f5f4?auto=format&fit=crop&q=80&w=800&h=600';
@@ -67,7 +67,16 @@ export const MOCK_LOCATIONS: Location[] = [
     address: '123 Auto Row, Toronto, ON',
     type: 'Showroom',
     phone: '555-0100',
-    email: 'sales@oldroad.auto'
+    email: 'sales@oldroad.auto',
+    operatingHours: {
+      monday: '09:00 AM - 08:00 PM',
+      tuesday: '09:00 AM - 08:00 PM',
+      wednesday: '09:00 AM - 08:00 PM',
+      thursday: '09:00 AM - 08:00 PM',
+      friday: '09:00 AM - 08:00 PM',
+      saturday: '10:00 AM - 06:00 PM',
+      sunday: 'Closed'
+    }
   },
   {
     id: 'loc2',
@@ -75,7 +84,16 @@ export const MOCK_LOCATIONS: Location[] = [
     address: '456 Industrial Pkwy, Oshawa, ON',
     type: 'Warehouse',
     phone: '555-0200',
-    email: 'storage@oldroad.auto'
+    email: 'storage@oldroad.auto',
+    operatingHours: {
+      monday: '08:00 AM - 04:00 PM',
+      tuesday: '08:00 AM - 04:00 PM',
+      wednesday: '08:00 AM - 04:00 PM',
+      thursday: '08:00 AM - 04:00 PM',
+      friday: '08:00 AM - 04:00 PM',
+      saturday: 'Closed',
+      sunday: 'Closed'
+    }
   }
 ];
 
@@ -83,36 +101,95 @@ export const MOCK_VEHICLES: Vehicle[] = [
   {
     id: 'v1',
     vin: '1GKS2CKC6LR123456',
-    year: 2023,
-    make: 'GMC',
-    model: 'Yukon Denali',
-    trim: 'Ultimate',
-    color: 'Midnight Black',
-    bodyStyle: 'SUV',
+    year: 2009,
+    make: 'Porsche',
+    model: 'Boxster Base',
+    trim: 'Convertible',
+    color: 'Guards Red',
+    bodyStyle: 'Convertible',
     fuelType: 'Gas',
-    km: 15200,
-    price: 92000,
+    km: 5200,
+    price: 44995,
     status: VehicleStatus.READY,
-    images: ['https://picsum.photos/seed/v1/800/600'],
+    ribbon: 'Just Arrived',
+    images: ['https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800'],
     location: 'Main Showroom',
-    features: { exterior: [], interior: [], infotainment: [], safety: [] }
+    transmission: '6-Speed Manual',
+    drivetrain: 'RWD',
+    engine: '2.7L Straight Six',
+    carfaxUrl: 'https://www.carfax.com/demo',
+    isCarfaxOneOwner: true,
+    features: { exterior: [], interior: [], infotainment: [], safety: [] },
+    accessories: []
   },
   {
     id: 'v2',
     vin: '2T3P1RFV5MW654321',
-    year: 2024,
-    make: 'Toyota',
-    model: 'RAV4',
-    trim: 'XSE Hybrid',
-    color: 'Silver Metallic',
-    bodyStyle: 'SUV',
-    fuelType: 'Hybrid',
-    km: 500,
-    price: 45000,
+    year: 2009,
+    make: 'Porsche',
+    model: 'Boxster Base',
+    trim: 'Red Convertible',
+    color: 'Red',
+    bodyStyle: 'Convertible',
+    fuelType: 'Gas',
+    km: 126273,
+    price: 19995,
     status: VehicleStatus.READY,
-    images: ['https://picsum.photos/seed/v2/800/600'],
+    ribbon: 'Clearout',
+    images: ['https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800'],
     location: 'Main Showroom',
-    features: { exterior: [], interior: [], infotainment: [], safety: [] }
+    transmission: '5-Speed Manual',
+    drivetrain: 'RWD',
+    engine: '2.9L Mid-Engine...',
+    carfaxUrl: 'https://www.carfax.com/demo',
+    isCarfaxOneOwner: true,
+    features: { exterior: [], interior: [], infotainment: [], safety: [] },
+    accessories: []
+  },
+  {
+    id: 'v3',
+    vin: 'PORSCHE-SOLD-123',
+    year: 2012,
+    make: 'Porsche',
+    model: 'Boxster S',
+    trim: 'Convertible',
+    color: 'Carrara White',
+    bodyStyle: 'Convertible',
+    fuelType: 'Gas',
+    km: 23000,
+    price: 48100,
+    status: VehicleStatus.SOLD,
+    images: ['https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=800'],
+    location: 'Main Showroom',
+    transmission: '6-Speed Manual',
+    drivetrain: 'RWD',
+    engine: '2.7L Straight Six',
+    carfaxUrl: 'https://www.carfax.com/demo',
+    isCarfaxOneOwner: true,
+    features: { exterior: [], interior: [], infotainment: [], safety: [] },
+    accessories: []
+  },
+  {
+    id: 'v4',
+    vin: 'TURBO-INV-999',
+    year: 2009,
+    make: 'Porsche',
+    model: 'Carrera 4S Turbo',
+    trim: 'Convertible',
+    color: 'Racing Yellow',
+    bodyStyle: 'Convertible',
+    fuelType: 'Gas',
+    km: 15000,
+    price: 125000,
+    status: VehicleStatus.READY,
+    images: ['https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&q=80&w=800'],
+    location: 'East Warehouse',
+    transmission: 'PDK Dual-Clutch',
+    drivetrain: 'AWD',
+    engine: '3.8L Flat Six',
+    isCarfaxOneOwner: false,
+    features: { exterior: [], interior: [], infotainment: [], safety: [] },
+    accessories: []
   }
 ];
 
@@ -164,12 +241,6 @@ export const MOCK_TRANSACTIONS: Transaction[] = [
   }
 ];
 
-export const MOCK_USERS: User[] = [
-  { id: 'u1', email: 'admin@oldroad.auto', firstName: 'Master', lastName: 'Admin', role: UserRole.ADMIN, baseSalary: 8500, hireDate: '2012-05-15' },
-  { id: 'u2', email: 'sales@oldroad.auto', firstName: 'John', lastName: 'Seller', role: UserRole.SALES, location: 'Main Showroom', baseSalary: 4500, hireDate: '2021-11-01' },
-  { id: 'u3', email: 'customer@gmail.com', firstName: 'Jane', lastName: 'Doe', role: UserRole.CUSTOMER }
-];
-
 export const MOCK_TRADE_REQUESTS: TradeRequest[] = [
   {
     id: 'TR-101',
@@ -185,4 +256,43 @@ export const MOCK_TRADE_REQUESTS: TradeRequest[] = [
     status: 'Pending',
     requestDate: '2023-10-25'
   }
+];
+
+export const MOCK_CONTACT_MESSAGES: ContactMessage[] = [
+  {
+    id: 'msg-1',
+    fullName: 'David Miller',
+    email: 'david.miller@example.com',
+    subject: 'Vehicle Sales',
+    message: 'I am interested in the 2009 Porsche Boxster. Is it still available for a test drive this weekend?',
+    status: 'New',
+    createdAt: '2025-02-28T10:30:00Z'
+  },
+  {
+    id: 'msg-2',
+    fullName: 'Sarah Wilson',
+    email: 'sarah.w@gmail.com',
+    subject: 'General Inquiry',
+    message: 'Do you offer financing for out-of-province buyers? I am located in Quebec.',
+    status: 'Read',
+    createdAt: '2025-02-27T14:15:00Z'
+  }
+];
+
+export interface DispatchArrival {
+  id: string;
+  year: number;
+  make: string;
+  model: string;
+  trim: string;
+  vin: string;
+  lotNumber: string;
+  status: 'Pending' | 'Paid' | 'Picked Up' | 'Delivered' | 'Fixing' | 'Ready to Sell';
+}
+
+export const MOCK_DISPATCH_ARRIVALS: DispatchArrival[] = [
+  { id: 'arr-1', year: 2023, make: 'Ford', model: 'F-150', trim: 'Lariat', vin: '1FTF...', lotNumber: '558291', status: 'Ready to Sell' },
+  { id: 'arr-2', year: 2022, make: 'BMW', model: 'X5', trim: 'xDrive40i', vin: '5UXW...', lotNumber: '110293', status: 'Fixing' },
+  { id: 'arr-3', year: 2024, make: 'Toyota', model: 'Camry', trim: 'XSE Hybrid', vin: '4T1B...', lotNumber: '992012', status: 'Ready to Sell' },
+  { id: 'arr-4', year: 2021, make: 'Honda', model: 'Civic', trim: 'Sport', vin: '1HGC...', lotNumber: '228391', status: 'Delivered' }
 ];

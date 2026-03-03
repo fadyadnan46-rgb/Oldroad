@@ -1,8 +1,20 @@
-
 export enum UserRole {
   CUSTOMER = 'CUSTOMER',
   SALES = 'SALES',
   ADMIN = 'ADMIN'
+}
+
+export type Language = 'en' | 'fr' | 'es' | 'de';
+
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  location?: string;
+  baseSalary?: number;
+  hireDate?: string;
 }
 
 export enum VehicleStatus {
@@ -12,20 +24,7 @@ export enum VehicleStatus {
   SOLD = 'Sold'
 }
 
-export type FuelType = 'Gas' | 'Hybrid' | 'EV' | 'Diesel' | 'Other';
-
-export interface User {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: UserRole;
-  location?: string;
-  phoneNumber?: string;
-  marketingOptIn?: boolean;
-  baseSalary?: number;
-  hireDate?: string;
-}
+export type RibbonType = 'Just Arrived' | 'Clearout' | 'None';
 
 export interface Vehicle {
   id: string;
@@ -36,23 +35,35 @@ export interface Vehicle {
   trim: string;
   color: string;
   bodyStyle: string;
-  fuelType: FuelType;
+  fuelType: 'Gas' | 'Hybrid' | 'EV' | 'Other';
   km: number;
   price: number;
   status: VehicleStatus;
+  ribbon?: RibbonType;
   images: string[];
   description?: string;
   carfaxUrl?: string;
+  isCarfaxOneOwner?: boolean;
   location: string;
+  transmission: string;
+  engine: string;
+  drivetrain: string;
   features: {
     exterior: string[];
     interior: string[];
     infotainment: string[];
     safety: string[];
   };
+  accessories: string[];
   soldById?: string;
   saleDate?: string;
   buyerName?: string;
+  readyToSaleDate?: string;
+  postDate?: string;
+  contractUrl?: string;
+  inventoryImage?: string;
+  dischargeUrl?: string;
+  isDischarged?: boolean;
 }
 
 // --- ADVANCED ACCOUNTING TYPES ---
@@ -220,6 +231,16 @@ export interface TradeRequest {
   appraisedBy?: string;
 }
 
+export interface OperatingHours {
+  monday: string;
+  tuesday: string;
+  wednesday: string;
+  thursday: string;
+  friday: string;
+  saturday: string;
+  sunday: string;
+}
+
 export interface Location {
   id: string;
   name: string;
@@ -227,6 +248,7 @@ export interface Location {
   type: 'Showroom' | 'Warehouse';
   phone: string;
   email: string;
+  operatingHours: OperatingHours;
 }
 
 export interface InternalTransfer {
@@ -239,4 +261,14 @@ export interface InternalTransfer {
   reference: string;
   status: 'Pending' | 'Posted' | 'Void';
   fee?: number;
+}
+
+export interface ContactMessage {
+  id: string;
+  fullName: string;
+  email: string;
+  subject: string;
+  message: string;
+  status: 'New' | 'Read' | 'Replied';
+  createdAt: string;
 }

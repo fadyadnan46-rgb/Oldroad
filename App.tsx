@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Link, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { User, UserRole, Location as OfficeLocation } from './types';
-import { MOCK_USERS, MOCK_LOCATIONS } from './constants';
+import { MOCK_LOCATIONS } from './constants';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -14,9 +13,16 @@ import CustomerDashboard from './pages/dashboards/CustomerDashboard';
 import SalesDashboard from './pages/dashboards/SalesDashboard';
 import AdminDashboard from './pages/dashboards/AdminDashboard';
 import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 import DispatchPage from './pages/TestPage';
 import ContractsPage from './pages/ContractsPage';
 import AccountantPage from './pages/AccountantPage';
+import LocationsPage from './pages/LocationsPage';
+import SettingsPage from './pages/SettingsPage';
+import VehicleListingPage from './pages/VehicleListingPage';
+import { LanguageProvider } from './LanguageContext';
+import { NotificationProvider } from './components/ui/NotificationContext';
+import NotificationCenter from './components/ui/NotificationCenter';
 
 const AppContent: React.FC<{
   currentUser: User | null;
@@ -30,7 +36,7 @@ const AppContent: React.FC<{
   const location = useLocation();
   
   // Hide footer on management and app-like pages to ensure full-screen experience
-  const hideFooterRoutes = ['/accountant', '/dispatch', '/dashboard', '/manage-trades', '/contracts'];
+  const hideFooterRoutes = ['/accountant', '/dispatch', '/dashboard', '/manage-trades', '/contracts', '/settings'];
   const shouldHideFooter = hideFooterRoutes.some(route => location.pathname.startsWith(route));
 
   return (
@@ -46,8 +52,12 @@ const AppContent: React.FC<{
           <Route path="/contracts" element={<ContractsPage user={currentUser} />} />
           <Route path="/accountant" element={<AccountantPage user={currentUser} locations={locations} />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/locations" element={<LocationsPage locations={locations} />} />
           <Route path="/auth" element={<AuthPage onLogin={login} />} />
           <Route path="/dispatch" element={<DispatchPage user={currentUser} />} />
+          <Route path="/list-asset/:vin" element={<VehicleListingPage user={currentUser} />} />
+          <Route path="/settings" element={currentUser ? <SettingsPage user={currentUser} /> : <Navigate to="/auth" />} />
           
           <Route 
             path="/dashboard" 
@@ -65,6 +75,7 @@ const AppContent: React.FC<{
       </main>
 
       {!shouldHideFooter && <Footer />}
+      <NotificationCenter />
     </div>
   );
 };
@@ -96,13 +107,8 @@ const App: React.FC = () => {
     });
   };
 
-  const login = (email: string) => {
-    const user = MOCK_USERS.find(u => u.email === email);
-    if (user) {
-      setCurrentUser(user);
-    } else {
-      alert("User not found. Try admin@oldroad.auto, sales@oldroad.auto, or customer@gmail.com");
-    }
+  const login = (user: User) => {
+    setCurrentUser(user);
   };
 
   const logout = () => {
@@ -110,17 +116,21 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router>
-      <AppContent 
-        currentUser={currentUser} 
-        isDarkMode={isDarkMode} 
-        toggleDarkMode={toggleDarkMode} 
-        login={login} 
-        logout={logout}
-        locations={locations}
-        setLocations={setLocations}
-      />
-    </Router>
+    <LanguageProvider>
+      <NotificationProvider>
+        <Router>
+          <AppContent 
+            currentUser={currentUser} 
+            isDarkMode={isDarkMode} 
+            toggleDarkMode={toggleDarkMode} 
+            login={login} 
+            logout={logout}
+            locations={locations}
+            setLocations={setLocations}
+          />
+        </Router>
+      </NotificationProvider>
+    </LanguageProvider>
   );
 };
 

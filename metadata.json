@@ -1,7 +1,5 @@
 {
   "name": "OldRoad Auto",
-  "description": "A comprehensive automotive platform for vehicle inventory management, customer trade-ins, and high-end dealership sales.",
-  "requestFramePermissions": [
-    "geolocation"
-  ]
+  "description": "A comprehensive oldroad auto platform for vehicle inventory management, customer trade-ins, and high-end dealership sales.",
+  "requestFramePermissions": []
 }
